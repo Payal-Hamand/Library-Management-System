@@ -2,6 +2,53 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
+// exports.register = async (req, res) => {
+//   try {
+//     const { username, password } = req.body;
+
+//     if (!username || !password) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Username and password are required",
+//       });
+//     }
+
+//     const existingUser = await User.findOne({ username });
+
+//     if (existingUser) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "User already exists",
+//       });
+//     }
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     const user = await User.create({
+//       username,
+//       password: hashedPassword,
+//       role: "user",
+//     });
+
+//     return res.status(201).json({
+//       success: true,
+//       message: "User registered successfully",
+//       data: {
+//         id: user._id,
+//         username: user.username,
+//         role: user.role,
+//       },
+//     });
+
+//   } catch (error) {
+//     return res.status(500).json({
+//       success: false,
+//       message: "Registration failed",
+//       error: error.message,
+//     });
+//   }
+// };
+
 exports.register = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -12,7 +59,6 @@ exports.register = async (req, res) => {
         message: "Username and password are required",
       });
     }
-
     const existingUser = await User.findOne({ username });
 
     if (existingUser) {
@@ -21,15 +67,12 @@ exports.register = async (req, res) => {
         message: "User already exists",
       });
     }
-
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const user = await User.create({
       username,
       password: hashedPassword,
       role: "user",
     });
-
     return res.status(201).json({
       success: true,
       message: "User registered successfully",
@@ -39,8 +82,8 @@ exports.register = async (req, res) => {
         role: user.role,
       },
     });
-
-  } catch (error) {
+  }
+    catch (error) {
     return res.status(500).json({
       success: false,
       message: "Registration failed",
@@ -48,8 +91,6 @@ exports.register = async (req, res) => {
     });
   }
 };
-
-
 
 exports.login = async (req, res) => {
   try {
