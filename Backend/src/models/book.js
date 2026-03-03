@@ -6,7 +6,7 @@ const bookSchema = new mongoose.Schema(
     author: { type: String, required: true },
     status: {
       type: String,
-      enum: ["available", "out of stock"],
+      enum: ["available", "borrowed"],
       default: "available",
     },
     publishedYear: { type: Number, required: true },
